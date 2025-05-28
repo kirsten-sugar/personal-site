@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirsten Sugar's Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FFF9FB;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5c1d2' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), 
+                          linear-gradient(135deg, #FFF9FB 0%, #FCF0F5 100%);
+            color: #333333;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .photo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-frame {
+            border: 1px solid rgba(245, 191, 210, 0.3);
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .photo-frame:hover {
+            border-color: rgba(245, 191, 210, 0.8);
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1.2s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+        
+        .text-reveal {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .text-reveal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            animation: reveal 1.5s ease forwards;
+        }
+        
+        @keyframes reveal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .canvas-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            opacity: 0.7;
+        }
+        
+        .section-separator {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(232, 162, 184, 0.5), transparent);
+            margin: 6rem 0;
+        }
+        
+        .interest-card {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(245, 191, 210, 0.25);
+            backdrop-filter: blur(3px);
+        }
+        
+        .interest-card:hover {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            border-color: rgba(245, 191, 210, 0.3);
+        }
+        
+        .interest-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: rgba(245, 191, 210, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: rgba(245, 191, 210, 1);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 1px solid rgba(245, 191, 210, 0.3);
+        }
+        
+        .timeline-item:last-child {
+            border-left: 1px solid transparent;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            background-color: rgba(245, 191, 210, 0.6);
+            border-radius: 50%;
+            left: -0.5rem;
+            top: 0;
+        }
+        
+        .media-item {
+            display: flex;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(245, 191, 210, 0.25);
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(3px);
+        }
+        
+        .media-item:hover {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            border-color: rgba(245, 191, 210, 0.3);
+        }
+        
+        .media-image {
+            width: 100px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 0.25rem;
+            margin-right: 1.5rem;
+        }
+        
+        .book-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .playlist-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(245, 191, 210, 0.4);
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(3px);
+        }
+        
+        .playlist-container:hover {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            border-color: rgba(245, 191, 210, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="bg-pattern"></div>
+    
+    <div class="max-w-5xl mx-auto px-8 py-16">
+
+        <header class="mb-24">
+            <div>
+                <h1 class="text-3xl font-light text-gray-800 animate-fade-in">Kirsten Sugar</h1>
+                <p class="text-sm text-gray-500 animate-fade-in animate-delay-1">Lead Software Engineer</p>
+            </div>
+        </header>
+        
+        <section class="mb-40 relative">            
+            <div class="flex flex-col md:flex-row items-center gap-20">
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl font-light mb-12 text-gray-800 animate-fade-in">
+                        Building thoughtful digital experiences
+                    </h2>
+                    <p class="text-base text-gray-600 mb-12 font-light leading-relaxed animate-fade-in animate-delay-1">
+                        I currently lead a team of software engineers at Rockstar, focused on delivering the best gaming experience to our users. Our team is responsible for the games you play, know and love. 
+                    </p>
+                    <p class="text-base text-gray-600 mb-12 font-light leading-relaxed animate-fade-in animate-delay-1">
+                        Currently based in NYC. Lover of all things travel, culture and gaming.
+                    </p>
+                </div>
+                
+                <div class="md:w-1/2 photo-container">
+                    <div class="photo-frame rounded-full w-72 h-72 mx-auto overflow-hidden">
+                        <img src="./photo.png" alt="Kirsten Sugar" class="w-full h-full object-cover object-center transition-transform duration-1000 hover:scale-105">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-40">
+            <h2 class="text-3xl font-light mb-16 text-gray-800 text-center">
+                Education
+            </h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="p-6 bg-white bg-opacity-60 backdrop-blur-sm rounded-lg mb-8">
+                        <h3 class="text-xl font-light text-gray-800 mb-2">Bachelor of Computer Science</h3>
+                        <p class="text-sm text-pink-200 mb-4">New York University • 2010 - 2014</p>
+                        <p class="text-base text-gray-600 font-light leading-relaxed">
+                            Specialized in Game Design, Artificial Intelligence and Computer Science. Active member of the Web & Game Development club. 
+                        </p>
+                    </div>
+                </div>
+            
+            </div>
+        </section>
+        
+        <div class="section-separator"></div>
+        <section class="mb-40">
+            <h2 class="text-3xl font-light mb-16 text-gray-800 text-center">
+                Interests & Passions
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="interest-card hover-lift">
+                    <div class="interest-icon mx-auto">
+                        <i class="fas fa-gamepad text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-light text-gray-800 text-center mb-4">Gaming</h3>
+                    <p class="text-base text-gray-600 font-light text-center leading-relaxed">
+                        I've been an avid gamer since childhood. I particularly enjoy immersive RPGs like The Witcher and open-world games. Now, I get to help create and deliver them to the world!
+                    </p>
+                </div>
+                
+                <div class="interest-card hover-lift">
+                    <div class="interest-icon mx-auto">
+                        <i class="fas fa-plane-departure text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-light text-gray-800 text-center mb-4">Traveling</h3>
+                    <p class="text-base text-gray-600 font-light text-center leading-relaxed">
+                        Exploring new cultures and places is one of my greatest joys. Recent adventures scuba diving in the Galápagos Islands and exploring the beautiful cities of Colombia. <br><br><b>"The world is a book, and those who do not travel read only one page."</b></br></br>
+                    </p>
+                </div>
+                
+                <div class="interest-card hover-lift">
+                    <div class="interest-icon mx-auto">
+                        <i class="fas fa-book text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-light text-gray-800 text-center mb-4">Reading</h3>
+                    <p class="text-base text-gray-600 font-light text-center leading-relaxed">
+                        Books are my constant companions. I'm drawn to science fiction that explores the impact of technology on society, as well as philosophy and non-fiction that challenges my thinking. Current favorite authors include Ted Chiang and Yuval Noah Harari.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="section-separator"></div>
+        <section class="mb-40">
+            <h2 class="text-3xl font-light mb-16 text-gray-800 text-center">
+                Currently Reading
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">Project Hail Mary</h3>
+                            <p class="text-sm text-pink-200 mb-2">Andy Weir</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                A lone astronaut must save the earth from disaster in this incredible new science-based thriller from the #1 New York Times bestselling author of The Martian.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">Dune</h3>
+                            <p class="text-sm text-pink-200 mb-2">Frank Herbert</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">The Psychology of Game Design</h3>
+                            <p class="text-sm text-pink-200 mb-2">Celia Hodent</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                An exploration of the cognitive aspects of game design, delving into how psychological principles can be applied to create more engaging player experiences.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">Exhalation</h3>
+                            <p class="text-sm text-pink-200 mb-2">Ted Chiang</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                A collection of short stories that explore the intersection of science, philosophy, and what it means to be human in a technological world.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="section-separator"></div>
+        <section class="mb-40">
+            <h2 class="text-3xl font-light mb-16 text-gray-800 text-center">
+                Currently Watching
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">Foundation</h3>
+                            <p class="text-sm text-pink-200 mb-2">Apple TV+</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                Based on the award-winning novels by Isaac Asimov, this epic saga chronicles the journey of a band of exiles who discover that the only way to save the Galactic Empire from destruction is to defy it.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-item hover-lift">
+                        <div>
+                            <h3 class="text-xl font-light text-gray-800 mb-2">The Last of Us</h3>
+                            <p class="text-sm text-pink-200 mb-2">HBO</p>
+                            <p class="text-base text-gray-600 font-light leading-relaxed">
+                                Twenty years after modern civilization has been destroyed, Joel is hired to smuggle Ellie out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal journey across the U.S.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 mb-8">
+                <h3 class="text-2xl font-light mb-8 text-gray-800 text-center">
+                    Current Soundtrack
+                </h3>
+                
+                <div class="max-w-2xl mx-auto playlist-container">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2kTpP9WLwc3HjI90coGIOe?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <div class="section-separator"></div>
+    
+        <footer class="border-t border-gray-100 pt-12 text-center text-gray-500 text-sm">
+            <div class="flex justify-center space-x-8 mb-8">
+                <a href="https://www.linkedin.com/in/kirstensugar/" class="text-gray-400 hover:text-pink-200 transition-colors hover-lift">
+                    <i class="fab fa-linkedin text-lg"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-pink-200 transition-colors hover-lift">
+                    <i class="fa-solid fa-coins"></i>
+                </a>
+            </div>
+            <p class="mb-12">&copy; 2025 Kirsten Sugar</p>
+        </footer>
+    </div>
+</body>
+</html>
